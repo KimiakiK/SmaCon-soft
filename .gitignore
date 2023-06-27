@@ -50,3 +50,14 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+
+.settings/
+.vscode/
+Core/
+Debug/
+Drivers/
+.cproject
+.mxproject
+.project
+*.launch
+*.ld
