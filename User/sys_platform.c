@@ -10,8 +10,10 @@
 
 #include "typedef.h"
 #include "drv_backlight.h"
+#include "drv_draw.h"
 #include "drv_tft.h"
 #include "mcal_dio.h"
+#include "mcal_dma2d.h"
 #include "mcal_spi.h"
 #include "mcal_timer.h"
 #include "sys_platform.h"
@@ -47,12 +49,14 @@ void InitPlatform(void)
 
 	/* MCAL初期化 */
 	InitDio();
+	InitDma2d();
 	InitSpi();
 	InitTimer();
 
 	/* ドライバ初期化 */
 	InitBacklight();
 	InitTft();
+	InitDraw();
 
 	/* 表示更新用タイマー開始 */
 	SetTimerCallback(TIMER_CH5, updateDisplayEvent);
@@ -70,9 +74,23 @@ void InitPlatform(void)
  */
 void MainPlatform(void)
 {
+	uint32_t y = 0; // 描画確認用
+
 	while (TRUE) {
 		if (event_update_display == TRUE) {
 			/* 周期処理実行 */
+			
+			// 描画確認用　↓
+			if (y < 59) {
+				y ++;
+			} else {
+				y = 0;
+			}
+			StartDraw(GetFrameBuffer());
+			FillRect(0, 0, TFT_WIDTH, TFT_HEIGHT, 0x00FFFFFF);
+			FillRect(10, y * 5, 220, 5, 0x00FF0000);
+			EndDraw();
+			//描画確認用　↑
 
 			event_update_display = FALSE;
 		}

@@ -27,8 +27,6 @@
 #define BUFFER_SIZE		(TFT_WIDTH * TFT_HEIGHT * COLOR_SIZE)
 /* フレームバッファの数 */
 #define BUFFER_NUM		(2)
-/* TFTの色数 [byte] */
-#define COLOR_SIZE		(2)
 /* 送信ジョブキューサイズ */
 #define SEND_JOB_QUEUE_SIZE		(20)
 
@@ -77,6 +75,8 @@ static uint8_t frame_buffer[BUFFER_NUM][BUFFER_SIZE];
 static uint8_t frame_buffer_index_display;
 static uint8_t frame_buffer_index_draw;
 
+static bool_t frame_buffer_swap_request;
+
 static send_state_t sync_send_state;
 static send_state_t async_send_state;
 
@@ -110,6 +110,7 @@ void InitTft(void)
 	}
 	frame_buffer_index_display = 0;
 	frame_buffer_index_draw = 1;
+	frame_buffer_swap_request = FALSE;
 	sync_send_state = SEND_STATE_IDLE;
 	async_send_state = SEND_STATE_IDLE;
 	send_job_queue_index_top = 0;
@@ -164,22 +165,42 @@ void StopTft(void)
  */
 void UpdateTft(void)
 {
-	/* フレームバッファ入れ替え */
-	uint8_t tmp_index = frame_buffer_index_draw;
-	frame_buffer_index_draw = frame_buffer_index_display;
-	frame_buffer_index_display = tmp_index;
+	if (frame_buffer_swap_request == TRUE) {
+		frame_buffer_swap_request = FALSE;
+		
+		/* フレームバッファ入れ替え */
+		uint8_t tmp_index = frame_buffer_index_draw;
+		frame_buffer_index_draw = frame_buffer_index_display;
+		frame_buffer_index_display = tmp_index;
 
-	/* 表示領域設定(全画面で指示) */
-	sendAsync((uint8_t*)command_CASET, sizeof(command_CASET), SEND_MODE_COMMAND);
-	sendAsync((uint8_t*)data_CASET, sizeof(data_CASET), SEND_MODE_DATA);
-	sendAsync((uint8_t*)command_RASET, sizeof(command_RASET), SEND_MODE_COMMAND);
-	sendAsync((uint8_t*)data_RASET, sizeof(data_RASET), SEND_MODE_DATA);
+		/* 表示領域設定(全画面で指示) */
+		sendAsync((uint8_t*)command_CASET, sizeof(command_CASET), SEND_MODE_COMMAND);
+		sendAsync((uint8_t*)data_CASET, sizeof(data_CASET), SEND_MODE_DATA);
+		sendAsync((uint8_t*)command_RASET, sizeof(command_RASET), SEND_MODE_COMMAND);
+		sendAsync((uint8_t*)data_RASET, sizeof(data_RASET), SEND_MODE_DATA);
 
-	/* メモリ書き込み指示 */
-	sendAsync((uint8_t*)command_RAMWR, sizeof(command_RAMWR), SEND_MODE_COMMAND);
+		/* メモリ書き込み指示 */
+		sendAsync((uint8_t*)command_RAMWR, sizeof(command_RAMWR), SEND_MODE_COMMAND);
 
-	/* 表示データ送信 */
-	sendAsync((uint8_t*)frame_buffer[frame_buffer_index_display], BUFFER_SIZE, SEND_MODE_DATA);
+		/* 表示データ送信 */
+		sendAsync((uint8_t*)frame_buffer[frame_buffer_index_display], BUFFER_SIZE, SEND_MODE_DATA);
+	}
+}
+
+/*
+ * Function: フレームバッファ取得
+ * Argument: なし
+ * Return  : フレームバッファ先頭アドレス
+ * Note    : なし
+ */
+uint8_t* GetFrameBuffer(void)
+{
+	return frame_buffer[frame_buffer_index_draw];
+}
+
+void SetSwapRequest(bool_t request)
+{
+	frame_buffer_swap_request = request;
 }
 
 /*
