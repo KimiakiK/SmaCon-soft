@@ -1,13 +1,13 @@
 /*
- * drv_draw.h
+ * drv_touch.h
  *
- *  Created on: 2023/06/29
+ *  Created on: Jun 30, 2023
  *      Author: KimiakiK
  */
 
 
-#ifndef DRV_DRAW_H_
-#define DRV_DRAW_H_
+#ifndef DRV_TOUCH_H_
+#define DRV_TOUCH_H_
 
 /********** Include **********/
 
@@ -17,6 +17,13 @@
 
 /********** Enum **********/
 
+typedef enum {
+	TOUCH_OFF = 0,
+	TOUCH_START,
+	TOUCH_ON,
+	TOUCH_END
+} touch_state_t;
+
 /********** Type **********/
 
 /********** Constant **********/
@@ -25,9 +32,9 @@
 
 /********** Function Prototype **********/
 
-void InitDraw(void);
-void StartDraw(uint8_t* frame_buffer);
-void EndDraw(void);
-void FillRect(float x, float y, uint32_t w, uint32_t h, uint32_t color_ARGB8888);
+void InitTouch(void);
+void MainTouch(void);
+touch_state_t GetTouchState(void);
+point_t GetTouchPoint(void);
 
-#endif /* DRV_DRAW_H_ */
+#endif /* DRV_TOUCH_H_ */

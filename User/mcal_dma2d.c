@@ -161,7 +161,8 @@ void transferJob(void)
 				hdma2d.Init.Mode = DMA2D_R2M;
 				hdma2d.Init.ColorMode = DMA2D_OUTPUT_RGB565;
 				hdma2d.Init.OutputOffset = job->output_offset;
-				hdma2d.Init.BytesSwap = DMA2D_BYTES_SWAP;
+				hdma2d.Init.RedBlueSwap = DMA2D_RB_REGULAR;
+				hdma2d.Init.BytesSwap = DMA2D_BYTES_REGULAR;		/* BytesSwapを有効にするとpixel per line (PL)に奇数が許容されないため、有効にできない */
 				hdma2d.Init.LineOffsetMode = DMA2D_LOM_PIXELS;
 
 				HAL_DMA2D_Init(&hdma2d);

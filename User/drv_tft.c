@@ -58,6 +58,8 @@ const static uint8_t command_COLMOD[] = {0x3A};			/* COLMOD (3Ah): Interface Pix
 const static uint8_t data_COLMOD[] = {0x55};			/* 65K of RGB interface, 16bit/pixel */
 const static uint8_t command_MADCTL[] = {0x36};			/* MADCTL (36h): Memory Data Access Control */
 const static uint8_t data_MADCTL[] = {0x00};			/* Page Address Order: Top to Bottom, Column Address Order: Left to Right */
+const static uint8_t command_RAMCTRL[] = {0xB0};		/* RAMCTRL (B0h): RAM Control */
+const static uint8_t data_RAMCTRL[] = {0x00, 0xF8};		/* Little Endian (LSB first) */
 // const static uint8_t command_INVOFF[] = {0x20};		/* INVOFF (20h): Display Inversion Off (0x0000:WHITE, 0xFFFF:BLACK */
 const static uint8_t command_INVON[] = {0x21};			/* INVON (21h): Display Inversion On (0x0000:BLACK, 0xFFFF:WHITE) */
 const static uint8_t command_NORON[] = {0x13};			/* NORON (13h): Normal Display Mode On */
@@ -131,6 +133,8 @@ void InitTft(void)
 	sendSync((uint8_t*)data_COLMOD, sizeof(data_COLMOD), SEND_MODE_DATA);
 	sendSync((uint8_t*)command_MADCTL, sizeof(command_MADCTL), SEND_MODE_COMMAND);
 	sendSync((uint8_t*)data_MADCTL, sizeof(data_MADCTL), SEND_MODE_DATA);
+	sendSync((uint8_t*)command_RAMCTRL, sizeof(command_RAMCTRL), SEND_MODE_COMMAND);
+	sendSync((uint8_t*)data_RAMCTRL, sizeof(data_RAMCTRL), SEND_MODE_DATA);
 	sendSync((uint8_t*)command_INVON, sizeof(command_INVON), SEND_MODE_COMMAND);
 	sendSync((uint8_t*)command_NORON, sizeof(command_NORON), SEND_MODE_COMMAND);
 }

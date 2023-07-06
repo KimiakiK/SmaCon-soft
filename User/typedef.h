@@ -34,6 +34,12 @@ typedef enum {
 /* コールバック関数用 関数ポインタ型 */
 typedef void(* callback_t)(void);
 
+/* 座標型 */
+typedef struct {
+	float x;
+	float y;
+} point_t;
+
 /********** Constant **********/
 
 /********** Variable **********/
