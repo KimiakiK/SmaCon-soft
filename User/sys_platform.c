@@ -11,6 +11,7 @@
 #include "typedef.h"
 #include "drv_backlight.h"
 #include "drv_draw.h"
+#include "drv_motor.h"
 #include "drv_tft.h"
 #include "drv_touch.h"
 #include "mcal_dio.h"
@@ -61,6 +62,7 @@ void InitPlatform(void)
 	InitTft();
 	InitTouch();
 	InitDraw();
+	InitMotor();
 
 	/* 表示更新用タイマー開始 */
 	SetTimerCallback(TIMER_CH5, updateDisplayEvent);
@@ -100,6 +102,12 @@ void MainPlatform(void)
 			}
 			EndDraw();
 			//描画確認用　↑
+
+			//モータ確認用　↓
+			if (GetTouchState() == TOUCH_START) {
+				StartMotor(50);
+			}
+			//モータ確認用　↑
 
 			event_update_display = FALSE;
 		}

@@ -18,8 +18,8 @@
 /********** Enum **********/
 
 typedef enum {
-	TIMER_CH1 = 0,		/* 振動モータ用 */
-	TIMER_CH2,			/* 1ms周期用 : (999+1) * 160MHz / (159+1) */
+	TIMER_CH1 = 0,		/* 振動モータ用 : PWM 約150Hz duty 50% */
+	TIMER_CH2,			/* 振動モータ駆動時間制御用 : 1カウント = 160MHz / (15999 + 1) = 0.1ms */
 	TIMER_CH3,			/* TFTバックライト用 */
 	TIMER_CH4,			/* Wait用(1us) : 160MHz / (159+1) */
 	TIMER_CH5,			/* 60fps周期用 : (266666+1) * 160MHz / 1 */

@@ -40,15 +40,15 @@ static TIM_HandleTypeDef* const htim[TIMER_CH_NUM] = {
 };
 
 static const timer_mode_t timer_mode[TIMER_CH_NUM] = {
-	TIMER_MODE_SIMPLE,		/* TIMER_CH1 */
-	TIMER_MODE_SIMPLE,		/* TIMER_CH2 */
+	TIMER_MODE_PWM,			/* TIMER_CH1 */
+	TIMER_MODE_INTERRUPT,	/* TIMER_CH2 */
 	TIMER_MODE_PWM,			/* TIMER_CH3 */
 	TIMER_MODE_SIMPLE,		/* TIMER_CH4 */
 	TIMER_MODE_INTERRUPT,	/* TIMER_CH5 */
 };
 
 static const uint32_t pwm_ch[TIMER_CH_NUM] = {
-	0,						/* TIMER_CH1 */
+	TIM_CHANNEL_3,			/* TIMER_CH1 */
 	0,						/* TIMER_CH2 */
 	TIM_CHANNEL_3,			/* TIMER_CH3 */
 	0,						/* TIMER_CH4 */
@@ -125,6 +125,7 @@ void StartTimer(timer_ch_t timer_ch)
 			break;
 		case TIMER_MODE_PWM:
 			HAL_TIM_PWM_Start(htim[timer_ch],pwm_ch[timer_ch]);
+			HAL_TIMEx_PWMN_Start(htim[timer_ch],pwm_ch[timer_ch]);
 			break;
 		default:
 			/* 処理なし */
@@ -151,6 +152,7 @@ void StopTimer(timer_ch_t timer_ch)
 			break;
 		case TIMER_MODE_PWM:
 			HAL_TIM_PWM_Stop(htim[timer_ch],pwm_ch[timer_ch]);
+			HAL_TIMEx_PWMN_Stop(htim[timer_ch],pwm_ch[timer_ch]);
 			break;
 		default:
 			/* 処理なし */

@@ -61,3 +61,4 @@ Drivers/
 .project
 *.launch
 *.ld
+debug.log
