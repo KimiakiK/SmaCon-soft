@@ -14,6 +14,7 @@
 #include "drv_motor.h"
 #include "drv_tft.h"
 #include "drv_touch.h"
+#include "mcal_adc.h"
 #include "mcal_dio.h"
 #include "mcal_dma2d.h"
 #include "mcal_i2c.h"
@@ -52,6 +53,7 @@ void InitPlatform(void)
 
 	/* MCAL初期化 */
 	InitDio();
+	InitAdc();
 	InitDma2d();
 	InitI2c();
 	InitSpi();
@@ -85,6 +87,7 @@ void MainPlatform(void)
 	while (TRUE) {
 		if (event_update_display == TRUE) {
 			/* 周期処理実行 */
+			MainAdc();
 			MainTouch();
 			
 			// 描画確認用　↓
@@ -99,6 +102,13 @@ void MainPlatform(void)
 			if (GetTouchState() == TOUCH_ON) {
 				point_t point = GetTouchPoint();
 				FillRect(point.x - 20.0f, point.y - 20.0f, 40, 40, 0x00FF0000);
+			}
+			{
+				float h = GetAd(AD_ID_POS_H);
+				float v = GetAd(AD_ID_POS_V);
+				float l = GetAd(AD_ID_LEVER);
+				FillRect(h*TFT_WIDTH - 20.0f, v*TFT_HEIGHT - 20.0f, 40, 40, 0x000000FF);
+				FillRect(l*TFT_WIDTH - 20.0f, 10.0f, 40, 30, 0x000000FF);
 			}
 			EndDraw();
 			//描画確認用　↑
