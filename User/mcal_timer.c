@@ -30,6 +30,7 @@ extern TIM_HandleTypeDef htim2;
 extern TIM_HandleTypeDef htim3;
 extern TIM_HandleTypeDef htim4;
 extern TIM_HandleTypeDef htim5;
+extern TIM_HandleTypeDef htim6;
 
 static TIM_HandleTypeDef* const htim[TIMER_CH_NUM] = {
 	&htim1,		/* TIMER_CH1 */
@@ -37,6 +38,7 @@ static TIM_HandleTypeDef* const htim[TIMER_CH_NUM] = {
 	&htim3,		/* TIMER_CH3 */
 	&htim4,		/* TIMER_CH4 */
 	&htim5,		/* TIMER_CH5 */
+	&htim6,		/* TIMER_CH5 */
 };
 
 static const timer_mode_t timer_mode[TIMER_CH_NUM] = {
@@ -45,6 +47,7 @@ static const timer_mode_t timer_mode[TIMER_CH_NUM] = {
 	TIMER_MODE_PWM,			/* TIMER_CH3 */
 	TIMER_MODE_SIMPLE,		/* TIMER_CH4 */
 	TIMER_MODE_INTERRUPT,	/* TIMER_CH5 */
+	TIMER_MODE_INTERRUPT,	/* TIMER_CH5 */
 };
 
 static const uint32_t pwm_ch[TIMER_CH_NUM] = {
@@ -52,6 +55,7 @@ static const uint32_t pwm_ch[TIMER_CH_NUM] = {
 	0,						/* TIMER_CH2 */
 	TIM_CHANNEL_3,			/* TIMER_CH3 */
 	0,						/* TIMER_CH4 */
+	0,						/* TIMER_CH5 */
 	0,						/* TIMER_CH5 */
 };
 

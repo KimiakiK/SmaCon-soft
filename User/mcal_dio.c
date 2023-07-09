@@ -28,6 +28,10 @@ const gpio_t gpio_table[PIN_ID_NUM] = {
 	{TFT_CS_GPIO_Port, TFT_CS_Pin},		/* PIN_ID_TFT_CS */
 	{TFT_DC_GPIO_Port, TFT_DC_Pin},		/* PIN_ID_TFT_DC */
 	{SD_CS_GPIO_Port, SD_CS_Pin},		/* PIN_ID_SD_CS */
+	{SW_A_GPIO_Port, SW_A_Pin},			/* PIN_ID_SW_A */
+	{SW_B_GPIO_Port, SW_B_Pin},			/* PIN_ID_SW_B */
+	{SW_C_GPIO_Port, SW_C_Pin},			/* PIN_ID_SW_C */
+	{SW_D_GPIO_Port, SW_D_Pin},			/* PIN_ID_SW_D */
 };
 
 /********** Variable **********/

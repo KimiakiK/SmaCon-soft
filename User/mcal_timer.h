@@ -23,6 +23,7 @@ typedef enum {
 	TIMER_CH3,			/* TFTバックライト用 */
 	TIMER_CH4,			/* Wait用(1us) : 160MHz / (159+1) */
 	TIMER_CH5,			/* 60fps周期用 : (266666+1) * 160MHz / 1 */
+	TIMER_CH6,			/* 5ms周期用 : (4999+1) * 160MHz / (159 + 1) */
 	TIMER_CH_NUM
 } timer_ch_t;
 
