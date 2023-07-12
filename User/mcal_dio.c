@@ -32,6 +32,8 @@ const gpio_t gpio_table[PIN_ID_NUM] = {
 	{SW_B_GPIO_Port, SW_B_Pin},			/* PIN_ID_SW_B */
 	{SW_C_GPIO_Port, SW_C_Pin},			/* PIN_ID_SW_C */
 	{SW_D_GPIO_Port, SW_D_Pin},			/* PIN_ID_SW_D */
+	{SOUND_CS_GPIO_Port, SOUND_CS_Pin},	/* PIN_ID_SOUND_CS */
+	{AUDIO_SW_GPIO_Port, AUDIO_SW_Pin},	/* PIN_ID_AUDIO_SW */
 };
 
 /********** Variable **********/

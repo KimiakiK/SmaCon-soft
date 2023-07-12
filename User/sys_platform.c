@@ -13,6 +13,7 @@
 #include "drv_controller.h"
 #include "drv_draw.h"
 #include "drv_motor.h"
+#include "drv_sound.h"
 #include "drv_tft.h"
 #include "drv_touch.h"
 #include "mcal_adc.h"
@@ -69,6 +70,7 @@ void InitPlatform(void)
 	InitTouch();
 	InitDraw();
 	InitMotor();
+	InitSound();
 
 	/* タイマー開始 */
 	SetTimerCallback(TIMER_CH5, updateDisplayEvent);
@@ -171,6 +173,25 @@ void cyclicMainEvent(void)
 		if (GetInputState(INPUT_ID_LEVER_RIGHT) == INPUT_ON) {
 			FillRect(130.0f, 270.0f, 20, 20, 0x0000FF00);
 		}
+	}
+	{
+		static pin_level_t audio_sw;
+		/* サウンド確認 */
+		if (GetTouchState() == TOUCH_ON) {
+			KeyOn(4, 601);
+		} else if (GetTouchState() == TOUCH_OFF) {
+			KeyOff();
+		}
+		/* サウンド出力先切り替え */
+		if ((ReadPin(PIN_ID_AUDIO_SW) == PIN_LEVEL_HIGH) && (audio_sw == PIN_LEVEL_LOW)) {
+			/* スピーカー出力に切り替え */
+			ChangeSoundOutputDevice(SOUND_OUTPUT_SPEAKER);
+		}
+		if ((ReadPin(PIN_ID_AUDIO_SW) == PIN_LEVEL_LOW) && (audio_sw == PIN_LEVEL_HIGH)) {
+			/* ライン出力に切り替え */
+			ChangeSoundOutputDevice(SOUND_OUTPUT_LINE);
+		}
+		audio_sw = ReadPin(PIN_ID_AUDIO_SW);
 	}
 	EndDraw();
 	//描画確認用　↑

@@ -25,6 +25,8 @@ typedef enum {
 	PIN_ID_SW_B,
 	PIN_ID_SW_C,
 	PIN_ID_SW_D,
+	PIN_ID_SOUND_CS,
+	PIN_ID_AUDIO_SW,
 	PIN_ID_NUM
 } pin_id_t;
 
