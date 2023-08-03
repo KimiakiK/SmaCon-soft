@@ -12,6 +12,7 @@
 #include "drv_backlight.h"
 #include "drv_controller.h"
 #include "drv_draw.h"
+#include "drv_eeprom.h"
 #include "drv_motor.h"
 #include "drv_sound.h"
 #include "drv_tft.h"
@@ -71,6 +72,7 @@ void InitPlatform(void)
 	InitDraw();
 	InitMotor();
 	InitSound();
+	InitEeprom();
 
 	/* タイマー開始 */
 	SetTimerCallback(TIMER_CH5, updateDisplayEvent);
@@ -112,6 +114,7 @@ void cyclicMainEvent(void)
 	MainAdc();
 	MainTouch();
 	MainController();
+	MainEeprom();
 	
 	// 描画確認用　↓
 	StartDraw(GetFrameBuffer());

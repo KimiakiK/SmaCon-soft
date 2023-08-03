@@ -20,7 +20,7 @@
 typedef enum {
 	PIN_ID_TFT_CS = 0,
 	PIN_ID_TFT_DC,
-	PIN_ID_SD_CS,
+	PIN_ID_EEPROM_CS,
 	PIN_ID_SW_A,
 	PIN_ID_SW_B,
 	PIN_ID_SW_C,

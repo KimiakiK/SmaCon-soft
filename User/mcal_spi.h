@@ -21,7 +21,7 @@
 typedef enum {
 	SPI_CH1 = 0,		/* TFT */
 	SPI_CH2,			/* SOUND */
-	SPI_CH3,			/* NVM */
+	SPI_CH3,			/* EEPROM */
 	SPI_CH_NUM
 } spi_ch_t;
 
@@ -36,7 +36,9 @@ typedef enum {
 
 void InitSpi(void);
 result_t SendSpi(spi_ch_t spi_ch, uint8_t* data, uint32_t length, callback_t callback);
-void InterruptSpiDmaTransferComplete(spi_ch_t spi_ch);
+result_t ReceiveSpi(spi_ch_t spi_ch, uint8_t* receive_buffer, uint16_t length, callback_t callback);
+result_t SendReceiveSpi(spi_ch_t spi_ch, uint8_t* send_data, uint8_t* receive_buffer, uint16_t length, callback_t callback);
+void InterruptSpiComplete(spi_ch_t spi_ch);
 
 
 #endif /* MCAL_SPI_H_ */
