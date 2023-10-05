@@ -140,7 +140,7 @@ void InitSound(void)
 	sendSingleWrite(YMF825_REG_AP, 0x00, SEND_MODE_SYNC);			/* AP2(SPAMP, SPOUT2)有効化 */
 
 	sendSingleWrite(YMF825_REG_GAIN, 0x01, SEND_MODE_SYNC);			/* Analog Gain */
-	sendSingleWrite(YMF825_REG_MASTER_VOL, 0xC0, SEND_MODE_SYNC);	/* Master volume level */
+	sendSingleWrite(YMF825_REG_MASTER_VOL, 0x60, SEND_MODE_SYNC);	/* Master volume level */
 	sendSingleWrite(YMF825_REG_MUTE_ITIME, 0x3F, SEND_MODE_SYNC);	/* Interpolation(補間)有効化 */
 	sendSingleWrite(YMF825_REG_DIR_MT, 0x00, SEND_MODE_SYNC);		/* Interpolation(補間)有効化 */
 

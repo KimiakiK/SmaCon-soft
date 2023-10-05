@@ -71,10 +71,12 @@ void InitPlatform(void)
 	InitTouch();
 	InitDraw();
 	InitMotor();
-	InitSound();
 	InitEeprom();
+	InitSound();
 
 	/* タイマー開始 */
+	SetTimerPeriod(TIMER_CH5, 2666666);	/* 60FPS用 */
+	// SetTimerPeriod(TIMER_CH5, 5333333);	/* 30FPS用 */
 	SetTimerCallback(TIMER_CH5, updateDisplayEvent);
 	SetTimerCallback(TIMER_CH6, cyclic5msEvent);
 	StartTimer(TIMER_CH5);
@@ -130,7 +132,7 @@ void cyclicMainEvent(void)
 		FillRect(10, y * 5, 220, 5, 0x00FF0000);
 		if (GetTouchState() == TOUCH_ON) {
 			point_t point = GetTouchPoint();
-			FillRect(point.x - 20.0f, point.y - 20.0f, 40, 40, 0x00FF0000);
+			FillRect(point.x - 20.0f, point.y - 20.0f, 40, 40, 0x0000FF00);
 		}
 	}
 	{
@@ -180,9 +182,9 @@ void cyclicMainEvent(void)
 	{
 		static pin_level_t audio_sw;
 		/* サウンド確認 */
-		if (GetTouchState() == TOUCH_ON) {
+		if (GetInputState(INPUT_ID_SW_A) == INPUT_PUSH) {
 			KeyOn(4, 601);
-		} else if (GetTouchState() == TOUCH_OFF) {
+		} else if (GetInputState(INPUT_ID_SW_A) == INPUT_RELEASE) {
 			KeyOff();
 		}
 		/* サウンド出力先切り替え */
@@ -199,7 +201,7 @@ void cyclicMainEvent(void)
 	EndDraw();
 	//描画確認用　↑
 	//モータ確認用　↓
-	if (GetTouchState() == TOUCH_START) {
+	if (GetInputState(INPUT_ID_SW_B) == INPUT_PUSH) {
 		StartMotor(50);
 	}
 	//モータ確認用　↑
